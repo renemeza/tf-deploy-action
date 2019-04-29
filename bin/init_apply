@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -eu
+
+BASEDIR=$(dirname "$0")
+CURRENT_ENV=$("$BASEDIR"/get_current_env)
+
+export CONFIG_ENV=${CURRENT_ENV:-'dev'}
+export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-'us-east-1'}
+
+cd "${TF_ACTION_WORKING_DIR:-.}"
+
+rm -rf .terraform
+
+echo "#### Deployment started to '$CONFIG_ENV' environment and '$AWS_DEFAULT_REGION' region ####"
+
+echo "#### Starting terraform init ####"
+
+init-terraform "$TF_INIT_OPTIONS"
+
+echo "#### Starting terraform apply ####"
+
+apply-terraform "$TF_APPLY_OPTIONS"

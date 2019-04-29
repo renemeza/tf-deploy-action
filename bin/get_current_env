@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -eu
+
+BASEDIR=$(dirname "$0")
+DEPLOYMENT_ENV=$("$BASEDIR"/deployment_get_environment)
+ENV=dev
+
+# Get deployment environment
+if [ "$DEPLOYMENT_ENV" = staging ]; then
+  ENV="stag"
+elif [ "$DEPLOYMENT_ENV" = production ]; then
+  ENV="prod"
+elif [ "$DEPLOYMENT_ENV" = testing ]; then
+  ENV="test"
+fi
+
+echo "$ENV"

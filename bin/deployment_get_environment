@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -eu
+
+if [ -f "$HOME"/bin/deployment-get-environment ]; then
+  "$HOME"/bin/deployment-get-environment
+  exit 0
+fi
+
+echo "develop"

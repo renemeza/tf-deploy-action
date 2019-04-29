@@ -1,0 +1,21 @@
+#!/bin/sh
+
+BASEDIR=$(dirname "$0")
+
+set +e
+OUTPUT=$(sh -c "terraform apply -auto-approve -input=false -no-color $*" 2>&1)
+SUCCESS=$?
+echo "$OUTPUT"
+set -e
+
+if [ "$SUCCESS" -ne 0 ]; then
+  echo "#### Terraform Apply failed ####"
+
+  # Create deployment failure status
+  "${BASEDIR}"/deployment_create_status failure
+
+  exit "$SUCCESS"
+fi
+
+echo "#### Terraform Apply failed ####"
+exit "$SUCCESS"
