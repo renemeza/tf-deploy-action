@@ -2,6 +2,10 @@
 
 BASEDIR=$(dirname "$0")
 
+echo "#### Starting terraform init ####"
+echo "### Region: $AWS_DEFAULT_REGION ###"
+echo "### Options: $* ###"
+
 set +e
 OUTPUT=$(sh -c "terraform init -input=false -no-color $*" 2>&1)
 SUCCESS=$?
@@ -16,5 +20,7 @@ if [ "$SUCCESS" -ne 0 ]; then
 
   exit "$SUCCESS"
 fi
+
+echo "#### Terraform Init succeded ####"
 
 exit 0

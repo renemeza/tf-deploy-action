@@ -2,6 +2,10 @@
 
 BASEDIR=$(dirname "$0")
 
+echo "#### Starting terraform apply ####"
+echo "### Region: $AWS_DEFAULT_REGION ###"
+echo "### Options: $* ###"
+
 set +e
 OUTPUT=$(sh -c "terraform apply -auto-approve -input=false -no-color $*" 2>&1)
 SUCCESS=$?
@@ -17,5 +21,6 @@ if [ "$SUCCESS" -ne 0 ]; then
   exit "$SUCCESS"
 fi
 
-echo "#### Terraform Apply failed ####"
-exit "$SUCCESS"
+echo "#### Terraform Apply succeded ####"
+
+exit 0

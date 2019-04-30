@@ -10,10 +10,6 @@ cd "${TF_ACTION_WORKING_DIR:-.}"
 
 rm -rf .terraform
 
-echo "#### Starting terraform init ####"
-
 "$BASEDIR"/init "$TF_INIT_OPTIONS"
-
-echo "#### Starting terraform apply ####"
 
 "$BASEDIR"/apply "$TF_APPLY_OPTIONS"
