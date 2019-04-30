@@ -7,7 +7,7 @@ COPY_SCRIPTS_ONLY=${COPY_SCRIPTS_ONLY:-"false"}
 COPY_SCRIPTS_DIR=${COPY_SCRIPTS_DIR:-"tf-deploy-action"}
 
 copy_files() {
-  echo "### Copying scripts to ${HOME}/sls-scripts"
+  echo "### Copying scripts to ${HOME}/${COPY_SCRIPTS_DIR}"
   mkdir -p "${HOME}/${COPY_SCRIPTS_DIR}"
   cp -R /usr/local/bin/* "${HOME}/${COPY_SCRIPTS_DIR}/."
 }
