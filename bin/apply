@@ -3,7 +3,7 @@
 BASEDIR=$(dirname "$0")
 
 echo "#### Starting terraform apply ####"
-echo "### Region: $AWS_DEFAULT_REGION ###"
+echo "### Region: $AWS_REGION ###"
 echo "### Options: $* ###"
 
 set +e

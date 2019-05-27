@@ -5,6 +5,8 @@ set -eu
 BASEDIR=$(dirname "$0")
 
 export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-'us-east-1'}
+export TF_INIT_OPTIONS=${TF_INIT_OPTIONS:-''}
+export TF_APPLY_OPTIONS=${TF_APPLY_OPTIONS:-''}
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
