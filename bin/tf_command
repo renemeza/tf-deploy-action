@@ -23,29 +23,27 @@ fi
 }
 
 COMMAND=""
+PARAMS=""
 
 parse_options() {
-  # set -- "$@"
-  local ARGN="$#"
-  while [ "$ARGN" -ne 0 ]
+  while [ "$#" -gt 0 ]
   do
     case $1 in
       --command)
       COMMAND="$2"
-      shift
-      shift
+      shift 2
       ;;
-      ?*)
-      echo "Error: Unknown option. $1"
-      usage
-      exit 0
+      *)
+      PARAMS="$PARAMS $1"
+      shift
       ;;
     esac
-    ARGN=$((ARGN-1))
   done
 }
 
 parse_options "$@"
+
+eval set -- "$PARAMS"
 
 echo "#### Starting terraform $COMMAND ####"
 echo "### Region: $AWS_REGION ###"
