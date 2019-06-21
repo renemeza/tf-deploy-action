@@ -44,10 +44,10 @@ COMMAND=$(echo "$PAYLOAD" | jq -r '.command')
 
 echo "Using init options '$INIT_OPTIONS' and options '$*'"
 
-"$BASEDIR"/tf_command --command init "$INIT_OPTIONS"
+sh -c "${BASEDIR}/tf_command --command init $INIT_OPTIONS"
 
 if [ "$COMMAND" = "null" ] || [ "$COMMAND" = "" ] || [ "$NO_COMMAND" = 1 ]; then
-  "$BASEDIR"/tf_command --command apply -auto-approve "$*"
+  sh -c "${BASEDIR}/tf_command --command apply -auto-approve $*"
 else
   COMMAND_LENGTH=$(echo "$COMMAND" | jq --raw-input '. | split(" ")' | jq -r '. | length')
 
@@ -57,5 +57,5 @@ else
 
   echo "Running $COMMAND"
 
-  "$BASEDIR"/tf_command --command "$COMMAND"
+  sh -c "${BASEDIR}/tf_command --command $COMMAND"
 fi
