@@ -47,7 +47,7 @@ echo "Using init options '$INIT_OPTIONS' and options '$*'"
 sh -c "${BASEDIR}/tf_command --command init $INIT_OPTIONS"
 
 if [ "$COMMAND" = "null" ] || [ "$COMMAND" = "" ] || [ "$NO_COMMAND" = 1 ]; then
-  sh -c "${BASEDIR}/tf_command --command apply -auto-approve $*"
+  sh -c "${BASEDIR}/tf_command --command apply -auto-approve -input=false -no-color $*"
 else
   COMMAND_LENGTH=$(echo "$COMMAND" | jq --raw-input '. | split(" ")' | jq -r '. | length')
 

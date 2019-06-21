@@ -47,7 +47,7 @@ set -- "$PARAMS"
 
 # Options without duplicates
 OPTIONS=$(echo "$*" | xargs -n1 | uniq | xargs)
-TF_COMMAND="terraform $COMMAND $OPTIONS -input=false -no-color"
+TF_COMMAND="terraform $COMMAND $OPTIONS"
 
 echo "#### Starting terraform $COMMAND ####"
 echo "### Region: $AWS_REGION ###"
