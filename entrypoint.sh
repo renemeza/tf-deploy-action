@@ -21,7 +21,7 @@ if [ "$COPY_SCRIPTS" = "true" ]; then
 fi
 
 if [ "$#" -eq 0 ]; then
-  init_apply
+  deploy
 else
   sh -c "$*"
 fi

@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+
+BASEDIR=$(dirname "$0")
+
 wrap() {
   if [[ $(echo "$1" | wc -l) -gt ${TF_ACTION_WRAP_LINES:-20} ]]; then
     echo "
@@ -18,16 +22,37 @@ $1
 fi
 }
 
-set -e
+COMMAND=""
 
-BASEDIR=$(dirname "$0")
+parse_options() {
+  # set -- "$@"
+  local ARGN="$#"
+  while [ "$ARGN" -ne 0 ]
+  do
+    case $1 in
+      --command)
+      COMMAND="$2"
+      shift
+      shift
+      ;;
+      ?*)
+      echo "Error: Unknown option. $1"
+      usage
+      exit 0
+      ;;
+    esac
+    ARGN=$((ARGN-1))
+  done
+}
 
-echo "#### Starting terraform apply ####"
+parse_options "$@"
+
+echo "#### Starting terraform $COMMAND ####"
 echo "### Region: $AWS_REGION ###"
 echo "### Options: $* ###"
 
 set +e
-OUTPUT=$(sh -c "terraform apply -auto-approve -input=false -no-color $*" 2>&1)
+OUTPUT=$(sh -c "terraform "$COMMAND" -auto-approve -input=false -no-color $*" 2>&1)
 SUCCESS=$?
 echo "$OUTPUT"
 set -e
@@ -36,7 +61,7 @@ PR_DATA=$(cat "$GITHUB_EVENT_PATH" | jq -r .pull_request)
 COMMENT=""
 
 if [ "$SUCCESS" -ne 0 ]; then
-  echo "#### Terraform Apply failed ####"
+  echo "#### Terraform $COMMAND failed ####"
 
   # Create deployment failure status
   "${BASEDIR}"/deployment_create_status failure
@@ -48,11 +73,11 @@ if [ "$SUCCESS" -ne 0 ]; then
 
   # Build the PR comment
   OUTPUT=$(wrap "$OUTPUT")
-  COMMENT="#### \`terraform Apply\` Failed
+  COMMENT="#### \`terraform $COMMAND\` Failed
 $OUTPUT
 *Workflow: \`$GITHUB_WORKFLOW\`, Action: \`$GITHUB_ACTION\`*"
 else
-  echo "#### Terraform Apply succeded ####"
+  echo "#### Terraform $COMMAND succeded ####"
 
   exit "$SUCCESS"
 fi

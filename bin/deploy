@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -e
+
+BASEDIR=$(dirname "$0")
+
+INIT_OPTIONS=""
+
+parse_options() {
+  # set -- "$@"
+  local ARGN="$#"
+  while [ "$ARGN" -ne 0 ]
+  do
+    case $1 in
+      --init_options)
+      INIT_OPTIONS="$2"
+      shift
+      shift
+      ;;
+      ?*)
+      echo "Error: Unknown option. $1"
+      usage
+      exit 0
+      ;;
+    esac
+    ARGN=$((ARGN-1))
+  done
+}
+
+parse_options "$@"
+
+export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-'us-east-1'}
+
+cd "${TF_ACTION_WORKING_DIR:-.}"
+
+rm -rf .terraform
+
+PAYLOAD=$("$BASEDIR"/get_payload)
+
+COMMAND=$(echo "$PAYLOAD" | jq -r '.command')
+
+if [ "$COMMAND" = "null" ]; then
+  "$BASEDIR"/tf_command.sh --command init "$INIT_OPTIONS"
+  "$BASEDIR"/tf_command.sh --command apply "$*"
+else
+  "$BASEDIR"/tf_command.sh --command "$COMMAND" "$*"
+fi

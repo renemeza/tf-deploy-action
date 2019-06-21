@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -eu
+
+cat "$GITHUB_EVENT_PATH" | jq -r '.deployment.payload'
