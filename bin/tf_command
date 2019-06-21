@@ -51,7 +51,7 @@ TF_COMMAND="terraform $COMMAND -input=false -no-color $OPTIONS"
 
 echo "#### Starting terraform $COMMAND ####"
 echo "### Region: $AWS_REGION ###"
-echo "### Options: $* ###"
+echo "### Options: $OPTIONS ###"
 echo "### Command: $TF_COMMAND"
 
 set +e
