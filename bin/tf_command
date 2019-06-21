@@ -45,7 +45,9 @@ parse_options "$@"
 
 set -- "$PARAMS"
 
-TF_COMMAND="terraform $COMMAND -input=false -no-color $*"
+# Options without duplicates
+OPTIONS=$(echo "$*" | xargs -n1 | sort -u | xargs)
+TF_COMMAND="terraform $COMMAND -input=false -no-color $OPTIONS"
 
 echo "#### Starting terraform $COMMAND ####"
 echo "### Region: $AWS_REGION ###"
