@@ -8,7 +8,7 @@ LABEL "com.github.actions.description"="Deploy terraform action"
 LABEL "com.github.actions.icon"="zap"
 LABEL "com.github.actions.color"="red"
 
-RUN apk --no-cache add jq
+RUN apk --no-cache add jq curl
 
 ENV PATH="/usr/local/bin:${PATH}"
 COPY bin /usr/local/bin

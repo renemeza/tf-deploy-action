@@ -43,7 +43,7 @@ parse_options() {
 
 parse_options "$@"
 
-eval set -- "$PARAMS"
+set -- "$PARAMS"
 
 TF_COMMAND="terraform $COMMAND -auto-approve -input=false -no-color $*"
 
