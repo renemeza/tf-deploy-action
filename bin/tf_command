@@ -45,7 +45,7 @@ parse_options "$@"
 
 set -- "$PARAMS"
 
-TF_COMMAND="terraform $COMMAND -auto-approve -input=false -no-color $*"
+TF_COMMAND="terraform $COMMAND -input=false -no-color $*"
 
 echo "#### Starting terraform $COMMAND ####"
 echo "### Region: $AWS_REGION ###"
@@ -53,7 +53,7 @@ echo "### Options: $* ###"
 echo "### Command: $TF_COMMAND"
 
 set +e
-OUTPUT=$(sh -c "terraform $COMMAND -auto-approve -input=false -no-color $*" 2>&1)
+OUTPUT=$(sh -c "$TF_COMMAND" 2>&1)
 SUCCESS=$?
 echo "$OUTPUT"
 set -e

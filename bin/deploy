@@ -47,10 +47,9 @@ echo "Using init options '$INIT_OPTIONS' and options '$*'"
 "$BASEDIR"/tf_command --command init "$INIT_OPTIONS"
 
 if [ "$COMMAND" = "null" ] || [ "$COMMAND" = "" ] || [ "$NO_COMMAND" = 1 ]; then
-
-  "$BASEDIR"/tf_command --command apply "$*"
+  "$BASEDIR"/tf_command --command apply -auto-approve "$*"
 else
-  echo "Using options '$*'"
+  echo "Running $COMMAND, Using options '$*'"
 
   "$BASEDIR"/tf_command --command "$COMMAND" "$*"
 fi
