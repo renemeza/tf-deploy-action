@@ -13,8 +13,6 @@ RUN apk --no-cache add jq
 ENV PATH="/usr/local/bin:${PATH}"
 COPY bin /usr/local/bin
 
-RUN chmod +x /usr/local/bin/*
-
 COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
