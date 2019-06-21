@@ -46,7 +46,7 @@ parse_options "$@"
 set -- "$PARAMS"
 
 # Options without duplicates
-OPTIONS=$(echo "$*" | xargs -n1 | uniq | xargs)
+OPTIONS=$(echo "$*" | awk -v RS="[ \n]+" '!n[$0]++' |  xargs)
 TF_COMMAND="terraform $COMMAND $OPTIONS"
 
 echo "#### Starting terraform $COMMAND ####"
