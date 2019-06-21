@@ -70,7 +70,7 @@ if [ "$SUCCESS" -ne 0 ]; then
   "${BASEDIR}"/deployment_create_status failure
 
   # If not a PR exit
-  if [ "$PR_DATE" = "null" ]; then
+  if [ "$PR_DATA" = "null" ]; then
     exit "$SUCCESS"
   fi
 
