@@ -41,6 +41,8 @@ export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-'us-east-1'}
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
+echo "Entering to $(pwd) directory."
+
 rm -rf .terraform
 
 PAYLOAD=$("$BASEDIR"/get_payload)
