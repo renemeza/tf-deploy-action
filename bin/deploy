@@ -6,6 +6,7 @@ BASEDIR=$(dirname "$0")
 
 INIT_OPTIONS=""
 NO_COMMAND=0
+NO_APPLY=0
 PARAMS=""
 
 parse_options() {
@@ -18,6 +19,10 @@ parse_options() {
       ;;
       --no-command)
       NO_COMMAND=1
+      shift
+      ;;
+      --no-apply)
+      NO_APPLY=1
       shift
       ;;
       *)
@@ -46,9 +51,11 @@ echo "Using init options '$INIT_OPTIONS' and options '$*'"
 
 sh -c "${BASEDIR}/run --command init $INIT_OPTIONS"
 
-if [ "$COMMAND" = "null" ] || [ "$COMMAND" = "" ] || [ "$NO_COMMAND" = 1 ]; then
+if [ "$NO_APPLY" = 0 ]; then
   sh -c "${BASEDIR}/run --command apply -auto-approve -input=false -no-color $*"
-else
+fi
+
+if [ "$COMMAND" != "null" ] || [ "$COMMAND" != "" ] || [ "$NO_COMMAND" = 0 ]; then
   COMMAND_LENGTH=$(echo "$COMMAND" | jq --raw-input '. | split(" ")' | jq -r '. | length')
 
   if [ "$COMMAND_LENGTH" -eq 1 ]; then
