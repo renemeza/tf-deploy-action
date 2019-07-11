@@ -53,11 +53,9 @@ echo "Using init options '$INIT_OPTIONS' and options '$*'"
 
 sh -c "${BASEDIR}/run --command init $INIT_OPTIONS"
 
-if [ "$NO_APPLY" = 0 ]; then
+if [ "$COMMAND" = "null" ] || [ "$COMMAND" = "" ] || [ "$NO_COMMAND" = 1 ]; then
   sh -c "${BASEDIR}/run --command apply -auto-approve -input=false -no-color $*"
-fi
-
-if [ "$COMMAND" != "null" ] && [ "$COMMAND" != "" ] && [ "$NO_COMMAND" = 0 ]; then
+else
   COMMAND_LENGTH=$(echo "$COMMAND" | jq --raw-input '. | split(" ")' | jq -r '. | length')
 
   if [ "$COMMAND_LENGTH" -eq 1 ]; then
